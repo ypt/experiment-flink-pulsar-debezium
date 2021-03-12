@@ -1,0 +1,36 @@
+tenant: "public"
+namespace: "default"
+name: "debezium-postgres-source"
+topicName: "debezium-postgres-topic"
+archive: "connectors/pulsar-io-debezium-postgres-2.6.0.nar"
+parallelism: 1
+
+configs:
+  # Other logic decoding output plugins are available, too
+  # decoderbufs and wal2json will need to be installed
+  # pgoutput is built into Postgres 10 and above
+  # See: https://debezium.io/documentation/reference/1.0/connectors/postgresql.html#overview
+  plugin.name: "pgoutput"
+
+  database.hostname: "source-db1"
+  database.port: "5432"
+  database.user: "experiment"
+  database.password: "experiment"
+  database.dbname: "experiment"
+  database.server.name: "source-db1"
+  schema.whitelist: "public"
+
+  # TODO: take a look at these other properties
+
+  # database.history: "org.apache.pulsar.io.debezium.PulsarDatabaseHistory"
+  # database.history.pulsar.topic: "history-topic"
+  # database.history.pulsar.service.url: "pulsar://127.0.0.1:6650"
+
+  ## OFFSET_STORAGE_TOPIC_CONFIG
+  # offset.storage.topic: "offset-topic"
+
+  ## KEY_CONVERTER_CLASS_CONFIG, VALUE_CONVERTER_CLASS_CONFIG
+  # key.converter: "org.apache.kafka.connect.json.JsonConverter"
+
+  ## PULSAR_SERVICE_URL_CONFIG
+  pulsar.service.url: "pulsar://pulsar:6650"
